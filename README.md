@@ -22,7 +22,7 @@ O Mundo da Barbie é representado por uma matriz 42 x 42, onde existem cinco tip
 - O agente só pode se mover na vertical e na horizontal (não pode andar na diagonal).
 - As pessoas podem aceitar ou recusar o convite da Barbie, e o agente deve tentar convencer outras pessoas se o convite for recusado.
 - A ordem em que as pessoas são convencidas afeta o custo total.
-- O programa deve ser implementado usando o algoritmo de busca heurística "Não definido".
+- O programa deve ser implementado usando o algoritmo de busca heurística A*.
 - O programa deve exibir o custo do caminho percorrido pelo agente e o custo final.
 - O mapa pode ser configurado a partir de um arquivo de texto ou diretamente no código.
 - O programa pode ser implementado em qualquer linguagem.
