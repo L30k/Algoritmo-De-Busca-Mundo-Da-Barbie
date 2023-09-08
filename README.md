@@ -7,7 +7,7 @@ Este é um projeto desenvolvido para simular a jornada da Barbie em busca de se 
 A Barbie precisa convencer três pessoas a fazerem parte da equipe para participar do concurso mundial de programação. As pessoas são Suzy, Polly, Mary, Carly, Ken e Brandon, que estão localizadas em diferentes pontos do mapa. A Barbie começa sua jornada na Casa da Barbie e termina quando convencer três pessoas e retornar à sua casa.
 
 ### Mapa e Terrenos
-![Texto alternativo da imagem](/)
+![Texto alternativo da imagem](./img.jpg)
 
 O Mundo da Barbie é representado por uma matriz 42 x 42, onde existem cinco tipos de terrenos:
 
