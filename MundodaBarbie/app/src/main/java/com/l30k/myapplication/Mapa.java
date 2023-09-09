@@ -50,4 +50,8 @@ public class Mapa {
         return mapa[i][j];
     }
 
+
+    public int[][] getMapaInteiro(){
+        return mapa;
+    }
 }

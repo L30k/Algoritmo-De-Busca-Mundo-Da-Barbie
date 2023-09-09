@@ -10,14 +10,25 @@ import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
     private Mapa mapa;
     private ImageButton[][] botoes; // Matriz para armazenar as referências dos botões
+
+    private boolean aceitarAltomatico = false;
+
+    private boolean estaExecutando = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,5 +123,161 @@ public class MainActivity extends AppCompatActivity {
         botoes[35][14].setImageResource(R.drawable.carly); //ok
 
         botoes[5][34].setImageResource(R.drawable.ken); //ok
+    }
+
+
+    public void onInicar(View view) {
+        resetarPosicaoDosPersonagem();
+
+        List<int[]> casas = new ArrayList<>(); // Inicialize a lista de casas
+
+        List<List<Node>> Fim = new ArrayList<>();
+
+        TextView textTempoVariavel = findViewById(R.id.textTempoVariavel);
+
+
+        int[] ponto1 = {4, 12};
+        int[] ponto2 = {9, 8};
+        int[] ponto3 = {36, 36};
+        int[] ponto4 = {23, 37};
+        int[] ponto5 = {35, 14};
+        int[] ponto6 = {5, 34};
+
+        casas.add(ponto1);
+        casas.add(ponto2);
+        casas.add(ponto3);
+        casas.add(ponto4);
+        casas.add(ponto5);
+        casas.add(ponto6);
+
+        AStar aStar = new AStar(mapa.getMapaInteiro());
+        List<Node> path = null;
+        List<List<Node>> aux = new ArrayList<>();
+        int x = 22, y = 18;
+
+        int aceito = 0;
+        int recuso = 0;
+        final int[] tempoFim = {0};
+
+        while (aceito < 4) {
+            // Verifique se já aceitamos 3 destinos
+            if (aceito >= 3) {
+                // Retorne para o ponto inicial
+                path = aStar.findPath(x, y, 22, 18); // Volte para (22, 18)
+                for (int i = 0; i < path.size(); i++) {
+                    Log.d("AStar Caminho", "X: " + path.get(i).getX() + ", Y: " + path.get(i).getY() + ", Cost: " + path.get(i).getCost());
+                }
+
+                Fim.add(path);
+                break;
+            }
+
+            for (int i = 0; i < casas.size(); i++) {
+                List<Node> ass = aStar.findPath(x, y, casas.get(i)[0], casas.get(i)[1]);
+                aux.add(ass);
+            }
+
+            if (!aux.isEmpty()) {
+                path = aux.get(0);
+                int pos = 0;
+
+                for (int i = 0; i < aux.size(); i++) {
+                    if (aux.get(i).get(aux.get(i).size() - 1).getCost() < path.get(path.size() - 1).getCost()) {
+                        path = aux.get(i);
+                        pos = i;
+                    }
+                }
+
+                if (path != null) {
+                    for (int i = 0; i < path.size(); i++) {
+                        Log.d("AStar Caminho", "X: " + path.get(i).getX() + ", Y: " + path.get(i).getY() + ", Cost: " + path.get(i).getCost());
+                    }
+                    Fim.add(path);
+
+                    x = path.get(path.size() - 1).getX();
+                    y = path.get(path.size() - 1).getY();
+
+
+                    if(aceitarAltomatico){
+                        aceito++;
+                    }else{
+                        Random random = new Random();
+                        if (random.nextBoolean()) {
+                            aceito++;
+                        } else {
+                            if(recuso == 3){
+                                aceito++;
+                            }else{
+                                recuso++;
+                            }
+                        }
+                    }
+
+                    casas.remove(pos);
+                }
+            } else {
+                Log.d("AStar Caminho", "No path found.");
+                break; // Saia do loop se não houver mais caminhos possíveis
+            }
+
+            aux.clear(); // Limpe a lista auxiliar para a próxima iteração
+        }
+
+        TextView textAceitoVariavel = findViewById(R.id.textAceitoVariavel);
+        TextView textRecusoVariavel = findViewById(R.id.textRecusoVariavel);
+        textAceitoVariavel.setText("" + aceito);
+        if(!aceitarAltomatico){
+            textRecusoVariavel.setText("" + recuso);
+        }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < Fim.size(); i++) {
+                    for (int j = 0; j < Fim.get(i).size(); j++) {
+                        final int finalI = i;
+                        final int finalJ = j;
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                botoes[Fim.get(finalI).get(finalJ).getX()][Fim.get(finalI).get(finalJ).getY()].setImageResource(R.drawable.barbie);
+                                if (finalJ > 0) {
+                                    botoes[Fim.get(finalI).get(finalJ - 1).getX()][Fim.get(finalI).get(finalJ - 1).getY()].setImageResource(0);
+                                }
+
+                                tempoFim[0] += Fim.get(finalI).get(finalJ).getCostPorMovimento();
+
+                                int minutos = tempoFim[0];
+                                int horas = minutos / 60;
+                                minutos %= 60;
+
+                                String tempoFormatado = horas + ":" + (minutos < 10 ? "0" : "") + minutos + ":00 ou " + tempoFim[0];
+                                textTempoVariavel.setText(tempoFormatado);
+
+                            }
+                        });
+
+                        try {
+                            Thread.sleep(200);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
+                estaExecutando = false;
+            }
+        }).start();
+    }
+
+    public void onAcitar(View view){
+        if(aceitarAltomatico){
+            aceitarAltomatico = false;
+            TextView textRecusoVariavel = findViewById(R.id.textRecusoVariavel);
+            textRecusoVariavel.setText("0");
+        }else{
+            aceitarAltomatico = true;
+            TextView textRecusoVariavel = findViewById(R.id.textRecusoVariavel);
+            textRecusoVariavel.setText("ninguém");
+        }
     }
 }

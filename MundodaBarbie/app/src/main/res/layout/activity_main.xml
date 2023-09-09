@@ -35,14 +35,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableStart="@android:drawable/ic_media_play"
+            android:onClick="onInicar"
             android:text="Iniciar" />
 
         <Button
-            android:id="@+id/buttonLimpar"
+            android:id="@+id/buttonAceitar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Limpar" />
+            android:onClick="onAcitar"
+            android:text="Aceitar" />
     </LinearLayout>
 
     <Space
@@ -96,7 +98,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="TextView"
+            android:text="0"
             android:textSize="16sp" />
 
         <Space
@@ -118,7 +120,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="TextView"
+            android:text="0"
             android:textSize="16sp" />
 
     </LinearLayout>
