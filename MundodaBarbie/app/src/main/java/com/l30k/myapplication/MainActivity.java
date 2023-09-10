@@ -96,13 +96,13 @@ public class MainActivity extends AppCompatActivity {
             case 0:
                 return Color.rgb(210, 105, 30); // Edifícios
             case 1:
-                return Color.rgb(192, 192, 192); // Asfalto
+                return Color.rgb(128, 128, 128); // Asfalto
             case 3:
                 return Color.rgb(139, 69, 19); // Terra
             case 5:
                 return Color.rgb(0, 255, 0); // Grama
             case 10:
-                return Color.rgb(128, 128, 128); // Paralelepípedo
+                return Color.rgb(192, 192, 192);// Paralelepípedo
             default:
                 return Color.WHITE; // Cor padrão para outros valores
         }
