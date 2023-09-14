@@ -30,7 +30,7 @@ O Mundo da Barbie é representado por uma matriz 42 x 42, onde existem cinco tip
 
 ## Implementação
 
-Este projeto foi implementado em Java no Android Studio e utiliza o algoritmo A* com a heurística "Manhattan distance", "Distância de Chebyshev" e "Distância Octile (com custo igual para diagonais)" para calcular a melhor rota.
+Este projeto foi implementado em Java no Android Studio e utiliza o algoritmo A* com a heurística "Manhattan distance", "Distância de Chebyshev" e "Distância Octile (com custo igual para diagonais)" podendo escolher entre elas para calcular a melhor rota.
 
 ## Requisitos
 
