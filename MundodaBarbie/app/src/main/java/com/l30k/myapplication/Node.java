@@ -67,8 +67,7 @@ public class Node {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Node node = (Node) o;
-        return x == node.x &&
-                y == node.y;
+        return x == node.x && y == node.y;
     }
 
     @Override
