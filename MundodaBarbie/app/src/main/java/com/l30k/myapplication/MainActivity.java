@@ -96,13 +96,13 @@ public class MainActivity extends AppCompatActivity {
             case 0:
                 return Color.rgb(210, 105, 30); // Edifícios
             case 1:
-                return Color.rgb(128, 128, 128); // Asfalto
+                return Color.rgb(192, 192, 192); // Asfalto
             case 3:
                 return Color.rgb(139, 69, 19); // Terra
             case 5:
                 return Color.rgb(0, 255, 0); // Grama
             case 10:
-                return Color.rgb(192, 192, 192);// Paralelepípedo
+                return Color.rgb(128, 128, 128); // Paralelepípedo
             default:
                 return Color.WHITE; // Cor padrão para outros valores
         }
@@ -127,6 +127,12 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void onInicar(View view) {
+        if(estaExecutando){
+            return;
+        }
+
+        estaExecutando = true;
+
         resetarPosicaoDosPersonagem();
 
         List<int[]> casas = new ArrayList<>(); // Inicialize a lista de casas
@@ -165,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
                 // Retorne para o ponto inicial
                 path = aStar.findPath(x, y, 22, 18); // Volte para (22, 18)
                 for (int i = 0; i < path.size(); i++) {
-                    Log.d("AStar Caminho", "X: " + path.get(i).getX() + ", Y: " + path.get(i).getY() + ", Cost: " + path.get(i).getCost());
+                    Log.d("AStar Caminho", "X: " + path.get(i).getX() + ", Y: " + path.get(i).getY() + ", Cost: " + path.get(i).getCostPorMovimento());
                 }
 
                 Fim.add(path);
@@ -190,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (path != null) {
                     for (int i = 0; i < path.size(); i++) {
-                        Log.d("AStar Caminho", "X: " + path.get(i).getX() + ", Y: " + path.get(i).getY() + ", Cost: " + path.get(i).getCost());
+                        Log.d("AStar Caminho", "X: " + path.get(i).getX() + ", Y: " + path.get(i).getY() + ", Cost: " + path.get(i).getCostPorMovimento());
                     }
                     Fim.add(path);
 
