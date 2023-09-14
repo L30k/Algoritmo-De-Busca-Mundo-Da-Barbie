@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -29,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private boolean aceitarAltomatico = false;
 
     private boolean estaExecutando = false;
+
+    private int val = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,6 +160,8 @@ public class MainActivity extends AppCompatActivity {
         casas.add(ponto6);
 
         AStar aStar = new AStar(mapa.getMapaInteiro());
+        aStar.setHeuristicType(val);
+
         List<Node> path = null;
         List<List<Node>> aux = new ArrayList<>();
         int x = 22, y = 18;
@@ -284,6 +289,23 @@ public class MainActivity extends AppCompatActivity {
             aceitarAltomatico = true;
             TextView textRecusoVariavel = findViewById(R.id.textRecusoVariavel);
             textRecusoVariavel.setText("ninguém");
+        }
+    }
+
+    public void onHeuristic(View view){
+        Button button = findViewById(R.id.button_heuristic);
+        if(val == 1){
+            button.setText("Distância de Chebyshev");
+            Log.d("Heuristic", "Distância de Chebyshev");
+            val = 2;
+        }else if(val == 2){
+            button.setText("Distância Octile");
+            Log.d("Heuristic", "Distância Octile");
+            val = 3;
+        }else{
+            button.setText("Distância de Manhattan");
+            Log.d("Heuristic", "Distância de Manhattan");
+            val = 1;
         }
     }
 }

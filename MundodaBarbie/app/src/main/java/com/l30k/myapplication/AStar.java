@@ -6,6 +6,7 @@ public class AStar {
     private int[][] grid;
     private int numRows;
     private int numCols;
+    private int heuristicType = 1;
 
     public AStar(int[][] grid) {
         this.grid = grid;
@@ -88,7 +89,20 @@ public class AStar {
 
     // Função para calcular a heurística (distância de Manhattan)
     private int calculateHeuristic(int x, int y, int endX, int endY) {
-        return Math.abs(endX - x) + Math.abs(endY - y);
+        switch (heuristicType) {
+            case 1:
+                // Distância de Manhattan
+                return Math.abs(endX - x) + Math.abs(endY - y);
+            case 2:
+                // Distância de Chebyshev
+                return Math.max(Math.abs(endX - x), Math.abs(endY - y));
+            case 3:
+                // Distância Octile (com custo igual para diagonais)
+                return Math.max(Math.abs(endX - x), Math.abs(endY - y)) + Math.min(Math.abs(endX - x), Math.abs(endY - y));
+            default:
+                // Heurística padrão (Distância de Manhattan)
+                return Math.abs(endX - x) + Math.abs(endY - y);
+        }
     }
 
     // Função para reconstruir o caminho a partir do nó de destino
@@ -100,5 +114,10 @@ public class AStar {
         }
         Collections.reverse(path);
         return path;
+    }
+
+    // Método set para heuristicType
+    public void setHeuristicType(int type) {
+        heuristicType = type;
     }
 }

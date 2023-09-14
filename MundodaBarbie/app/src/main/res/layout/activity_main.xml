@@ -81,7 +81,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
@@ -124,6 +124,32 @@
             android:textSize="16sp" />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_heuristic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onHeuristic"
+            android:text="Distância de Manhattan" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Distância de Manhattan:\n\nFórmula: H(n) = |x1 - x2| + |y1 - y2|\n\nExemplo: Se x1 = 2, y1 = 3, x2 = 5 e y2 = 7, então a distância de Manhattan seria |2 - 5| + |3 - 7| = 3 + 4 = 7.\n\nDistância de Chebyshev:\n\nFórmula: H(n) = max(|x1 - x2|, |y1 - y2|)\n\nExemplo: Usando os mesmos valores do exemplo anterior, a distância de Chebyshev seria max(|2 - 5|, |3 - 7|) = max(3, 4) = 4.\n\nDistância Octile (com custo igual para diagonais):\n\nFórmula: H(n) = max(|x1 - x2|, |y1 - y2|) + (diagonalCost - 2) * min(|x1 - x2|, |y1 - y2|)\n\nExemplo: Com os mesmos valores, se o custo diagonal for 2 (indicando que os movimentos diagonais têm o mesmo custo dos movimentos horizontais/verticais), a distância Octile seria max(|2 - 5|, |3 - 7|) + (2 - 2) * min(3, 4) = max(3, 4) = 4.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" />
+    </ScrollView>
 
 
 </LinearLayout>
